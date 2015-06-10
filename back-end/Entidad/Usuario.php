@@ -21,14 +21,9 @@ class Usuario extends EntidadBase {
     private $tipo;
     private $clave;
 
-    public function __construct($nombre, $apellido, $cedula, $correo, $tipo, $clave)
+    public function __construct()
     {
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-        $this->cedula = $cedula;
-        $this->correo = $correo;
-        $this->tipo = $tipo;
-        $this->clave = $clave;
+
     }
 
     /**

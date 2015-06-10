@@ -6,6 +6,9 @@
  * Time: 06:43 PM
  */
 
+namespace Dao;
+use PDO;
+use PDOException;
 
 class Connect extends PDO {
     private $tipo_de_base = 'mysql';

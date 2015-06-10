@@ -14,9 +14,9 @@ $usuario = new Usuario("Leonor", "Guzman","19720106","ronoel54@gmail.com", "admi
 $dao = new DaoUsuario($usuario);
 $dao->agregar();
 
-if ($dao->Objeto->getId() == 0)
+if ($dao->Usuario->getId() == 0)
 {    echo"No se creo";
 }else{
-    echo"se creo" .$dao->Objeto->getId();
+    echo"se creo" .$dao->Usuario->getId();
 }
 
