@@ -19,11 +19,10 @@ require'..\Fabrica\FabricaDao.php';
 
 class DaoUsuarioTest extends PHPUnit_Framework_TestCase {
 
-    var $Usuario;
+    var $User;
 
 
     public function setUp(){
-
         $Usuario = new Usuario();
         $Usuario->setNombre("Nombre");
         $Usuario->setApellido("Apellido");
@@ -31,20 +30,37 @@ class DaoUsuarioTest extends PHPUnit_Framework_TestCase {
         $Usuario->setCorreo("ronoel54@gmail.com");
         $Usuario->setTipo("admin");
         $Usuario->setClave("1234");
+        $this->User = $Usuario;
     }
 
 
+    /**
+     * Prueba dao de agregar usuario
+     */
     public function testAgregarUsuario(){
-        $dao = FabricaDao::obtenerDaoUsuario($Usuario);
-        $this->assertContains($dao->agregar() != 0);
+        $dao = FabricaDao::obtenerDaoUsuario($this->User);
+        $dao->agrega_modifica();
+        $this->assertTrue($dao->Usuario->getId() != 0);
+        $this->User->setId($dao->Usuario->getId());
     }
 
+    /**
+     * prueba dao de modificar usuario
+     */
     public function testModifcarUsuario(){
-        $UsuarioMod = new Usuario();
-        $UsuarioMod->setId(1);
-        $UsuarioMod->setNombre("Nombre Modificado");
-        $dao = FabricaDao::obtenerDaoUsuario($UsuarioMod);
-        $this->assertContains($dao->modificar($UsuarioMod->getId()) != 0);
+        $this->User->setNombre("Nombre Modificado");
+        $dao = FabricaDao::obtenerDaoUsuario($this->User);
+        $dao->agrega_modifica();
+        $dao->consultarPorId();
+        $this->assertEquals($dao->Usuario->getNombre(), $this->User->getNombre());
+    }
+
+    public function testEliminarUsuario(){
+        $dao = FabricaDao::obtenerDaoUsuario($this->User);
+        $dao->eliminar();
+        $dao->consultarPorId();
+        $this->assertTrue($dao->Usuario == null);
+
     }
 
     public function tearDown(){

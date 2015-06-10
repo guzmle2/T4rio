@@ -25,9 +25,11 @@ class DaoUsuario implements IDaoUsuario
         $this->Usuario =& $Usuario;
     }
 
-    public function agregar(){
+    public function agrega_modifica(){
         $conexion = new Connect();
-        try{
+        $query = '';
+        if($this->Usuario->getId() == null){
+
             $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'
              (nombre,
              apellido,
@@ -41,86 +43,92 @@ class DaoUsuario implements IDaoUsuario
               :correo,
               :tipo,
               :clave)');
+                $consulta->bindParam(':nombre', $this->Usuario->getNombre());
+                $consulta->bindParam(':apellido', $this->Usuario->getApellido());
+                $consulta->bindParam(':cedula', $this->Usuario->getCedula());
+                $consulta->bindParam(':tipo', $this->Usuario->getTipo());
+                $consulta->bindParam(':correo', $this->Usuario->getCorreo());
+                $consulta->bindParam(':clave', $this->Usuario->getClave());
+                $consulta->execute();
+            }
+        else{
+            if ($this->Usuario->getNombre() != null)
+            {
+                if($query == ''){
+                    $query .='nombre = :nombre';
+                }else{
+                    $query .=', nombre = :nombre';
+                }
+            }
+
+            if ($this->Usuario->getApellido() != null)
+            {
+                if($query == ''){
+                    $query .='apellido = :apellido';
+                }else{
+                    $query .=', apellido = :apellido';
+                }
+            }
+            if($this->Usuario->getCedula() != null){
+                if($query == ''){
+                    $query .='cedula = :cedula';
+                }else{
+                    $query.=', cedula = :cedula';
+                }
+
+            }
+
+
+            if( $this->Usuario->getCorreo() != null){
+                if($query == ''){
+                    $query .='correo = :correo';
+                }else{
+                    $query .=', correo = :correo';
+                }
+            }
+
+            if( $this->Usuario->getTipo() != null){
+                if($query == ''){
+                    $query .='tipo = :tipo';
+                }else{
+                    $query .=', tipo = :tipo';
+                }
+            }
+
+
+            if($this->Usuario->getClave() != null){
+                if($query == ''){
+                    $query .='clave = :clave';
+                }else{
+                    $query .=', clave = :clave';
+                }
+
+            }
+            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET '.$query.
+                ' WHERE id = :id');
             $consulta->bindParam(':nombre', $this->Usuario->getNombre());
             $consulta->bindParam(':apellido', $this->Usuario->getApellido());
             $consulta->bindParam(':cedula', $this->Usuario->getCedula());
             $consulta->bindParam(':tipo', $this->Usuario->getTipo());
             $consulta->bindParam(':correo', $this->Usuario->getCorreo());
             $consulta->bindParam(':clave', $this->Usuario->getClave());
-            $consulta->execute();
-            $this->Usuario->setId($conexion->lastInsertId()) ;
-            $conexion = null;
-
-        }catch (Exception $e){
-            echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
-        }
-
-    }
-
-    public function modificar($id){
-        $conexion = new Connect();
-        if ($this->Usuario->getNombre() != null)
-        {
-            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET
-            nombre = :nombre
-            WHERE id = :id');
-            $consulta->bindParam(':nombre', $this->Usuario->getNombre());
-            $consulta->bindParam(':id', $id);
-            $consulta->execute();
-        }
-
-        if ($this->Usuario->getApellido() != null)
-        {
-            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET
-            apellido = :apellido
-            WHERE id = :id');
-            $consulta->bindParam(':apellido',$this->Usuario->getApellido());
-            $consulta->bindParam(':id', $id);
+            $consulta->bindParam(':id', $this->Usuario->getId());
             $consulta->execute();
 
-        }
-        if($this->Usuario->getCedula() != null){
-            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET
-            cedula = :cedula
-            WHERE id = :id');
-            $consulta->bindParam(':cedula', $this->Usuario->getCedula());
-            $consulta->bindParam(':id', $id);
-            $consulta->execute();
 
         }
-        if($this->Usuario->getClave() != null){
-            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET
-            clave = :clave
-            WHERE id = :id');
-            $consulta->bindParam(':clave', $this->Usuario->getClave());
-            $consulta->bindParam(':id', $id);
-            $consulta->execute();
 
-        }
-        if( $this->Usuario->getTipo() != null){
-            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET
-            tipo = :tipo
-            WHERE id = :id');
-            $consulta->bindParam(':tipo', $this->Usuario->getTipo());
-            $consulta->bindParam(':id', $id);
-            $consulta->execute();
-        }
-        if( $this->Usuario->getCorreo() != null){
-            $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET
-            correo = :correo
-            WHERE id = :id');
-            $consulta->bindParam(':correo', $this->Usuario->getCorreo());
-            $consulta->bindParam(':id', $id);
-            $consulta->execute();
-        }
-
-        $this->id = $conexion->lastInsertId();
+        $this->Usuario->setId($conexion->lastInsertId()) ;
         $conexion = null;
+
+        return $this->Usuario;
     }
+
+
 
     public function consultarPorId(){
         $conexion = new Connect();
-        $consulta = $conexion->prepare('SELECT nombre,
+        $consulta = $conexion->prepare('SELECT id,nombre,
                                                 apellido,
                                                 cedula,
                                                 tipo,
@@ -132,13 +140,15 @@ class DaoUsuario implements IDaoUsuario
         $registro = $consulta->fetch();
         if($registro){
             $this->Usuario->setNombre($registro['nombre']);
-            $this->Usuario->setApellido($registro['nombre']);
-            $this->Usuario->setCedula($registro['nombre']);
-            $this->Usuario->setCorreo($registro['nombre']);
-            $this->Usuario->setTipo($registro['nombre']);
-            $this->Usuario->setClave($registro['nombre']);
+            $this->Usuario->setApellido($registro['apellido']);
+            $this->Usuario->setCedula($registro['cedula']);
+            $this->Usuario->setCorreo($registro['correo']);
+            $this->Usuario->setTipo($registro['tipo']);
+            $this->Usuario->setClave($registro['clave']);
+            $conexion = null;
+            return $this->Usuario;
         }else{
-            return false;
+            return $this->Usuario = null;
         }
     }
 
@@ -179,13 +189,15 @@ class DaoUsuario implements IDaoUsuario
         $consulta->execute();
         $registro = $consulta->fetch();
         if ($registro) {
-            return new self($registro['nombre'],
-                $registro['apellido'],
-                $registro['cedula'],
-                $registro['tipo'],
-                $registro['correo'],
-                $registro['clave'],
-                $this->Usuario->getId());
+            $this->Usuario->setNombre($registro['nombre']);
+            $this->Usuario->setApellido($registro['apellido']);
+            $this->Usuario->setCedula($registro['cedula']);
+            $this->Usuario->setCorreo($registro['correo']);
+            $this->Usuario->setTipo($registro['tipo']);
+            $this->Usuario->setClave($registro['clave']);
+            $conexion = null;
+            return $this->Usuario;
+
         } else {
             return false;
         }
@@ -207,5 +219,19 @@ class DaoUsuario implements IDaoUsuario
         $consulta->execute();
         $registros = $consulta->fetchAll();
         return $registros;
+    }
+
+    public function eliminar()
+    {
+        $conexion = new Connect();
+        try{
+            $consulta = $conexion->prepare( 'DELETE FROM ' . self::TABLA .' WHERE id = :parametro');
+            $consulta->bindParam(':parametro', $this->Usuario->getId());
+            $consulta->execute();
+            $conexion = null;
+
+        }catch (Exception $e){
+            echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
+        }
     }
 }

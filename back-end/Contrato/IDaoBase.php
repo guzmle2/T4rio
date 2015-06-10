@@ -9,11 +9,11 @@ namespace IDao;
 
 interface IDaoBase
 {
-    public function agregar();
-
-    public function modificar($id);
+    public function agrega_modifica();
 
     public function consultarPorId();
+
+    public function eliminar();
 
     public function consultarPorParametro();
 
