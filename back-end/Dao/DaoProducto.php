@@ -17,7 +17,7 @@ class DaoProducto implements IDaoProducto {
     const TABLA = 'producto';
 
     /**
-     * @param $Producto constructor de la clase
+     * @param $Producto
      */
     public function __construct(&$Producto)
     {
