@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - t4rio@localhost" uuid="d86753a1-fb44-44ac-be44-20a7fd8117d8">
+    <database-info product="MySQL" version="5.6.24" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="t4rio"/>
+    <table name="empresa" schema="" catalog="t4rio" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="nombre" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rif" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="direccion" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="factura_usuario_empresa_ibfk_2" table="factura_usuario_empresa" schema="" catalog="t4rio" columns="id_empresa"/>
+      <index name="unique_id" unique="true" columns="id"/>
+    </table>
+    <table name="factura_usuario_empresa" schema="" catalog="t4rio" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_usuario" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="id_empresa" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fechaCreacion" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="precioTotal" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="factura_usuario_empresa_ibfk_1" columns="id_usuario" ref-table="usuario" ref-schema="" ref-catalog="t4rio" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="factura_usuario_empresa_ibfk_2" columns="id_empresa" ref-table="empresa" ref-schema="" ref-catalog="t4rio" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="factura_usuario_empresa_producto_ibfk_1" table="factura_usuario_empresa_producto" schema="" catalog="t4rio" columns="id_facturaUsuarioEmpresa"/>
+      <index name="unique_id" unique="true" columns="id"/>
+    </table>
+    <table name="factura_usuario_empresa_producto" schema="" catalog="t4rio" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="id_facturaUsuarioEmpresa" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="id_producto" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cantidad" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="precioCompra" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="precioCantidad" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="factura_usuario_empresa_producto_ibfk_1" columns="id_facturaUsuarioEmpresa" ref-table="factura_usuario_empresa" ref-schema="" ref-catalog="t4rio" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="factura_usuario_empresa_producto_ibfk_2" columns="id_producto" ref-table="producto" ref-schema="" ref-catalog="t4rio" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="unique_id" unique="true" columns="id"/>
+    </table>
+    <table name="producto" schema="" catalog="t4rio" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="nombre" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="precioActual" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="estado" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="factura_usuario_empresa_producto_ibfk_2" table="factura_usuario_empresa_producto" schema="" catalog="t4rio" columns="id_producto"/>
+      <index name="unique_id" unique="true" columns="id"/>
+    </table>
+    <table name="usuario" schema="" catalog="t4rio" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="nombre" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="apellido" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cedula" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="correo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tipo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="clave" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="factura_usuario_empresa_ibfk_1" table="factura_usuario_empresa" schema="" catalog="t4rio" columns="id_usuario"/>
+      <index name="unique_id" unique="true" columns="id"/>
+    </table>
+  </data-source>
+</component>
