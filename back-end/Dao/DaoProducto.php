@@ -9,7 +9,8 @@
 namespace Dao;
 
 
-use Contrato\IDaoProducto;
+use IDao\IDaoProducto;
+
 require_once 'Connect.php';
 require_once '../Contrato/IDaoProducto.php';
 

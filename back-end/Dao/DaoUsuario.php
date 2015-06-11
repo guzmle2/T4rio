@@ -7,9 +7,7 @@
  */
 
 namespace Dao;
-use Dao\Connect;
-use Entidad\Usuario;
-use IDao\IDaoBase;
+use IDao\IDaoUsuario;
 
 require_once 'Connect.php';
 require_once '../Contrato/IDaoUsuario.php';

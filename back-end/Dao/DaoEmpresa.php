@@ -3,25 +3,24 @@
  * Created by PhpStorm.
  * User: LEONORBANCO
  * Date: 11/06/2015
- * Time: 10:37 AM
+ * Time: 06:21 PM
  */
 
 namespace Dao;
 
-use IDao\IDaoFacturaUEProducto;
+use IDao\IDaoEmpresa;
 
 require_once 'Connect.php';
-require_once '../Contrato/IDaoFacturaUEProducto.php';
+require_once '../Contrato/IDaoEmpresa.php';
 
-class DaoFacturaUEProducto implements IDaoFacturaUEProducto {
+class DaoEmpresa implements IDaoEmpresa {
 
+    var $Empresa;
+    const TABLA = 'factura_usuario_empresa';
 
-    var $FacturaUEProducto;
-    const TABLA = 'factura_usuario_empresa_producto';
-
-    public function __construct(&$FacturaUEProducto)
+    public function __construct(&$Empresa)
     {
-        $this->FacturaUEProducto =& $FacturaUEProducto;
+        $this->Empresa =& $Empresa;
     }
 
     public function agrega_modifica()
