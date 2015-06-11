@@ -10,7 +10,7 @@ namespace Contrato;
 
 
 use IDao\IDaoBase;
-require_once 'IDaoProducto.php';
+require_once 'IDaoBase.php';
 
 interface IDaoProducto extends IDaoBase {
 

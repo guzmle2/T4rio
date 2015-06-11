@@ -13,9 +13,9 @@ interface IDaoBase
 
     public function consultarPorId();
 
-    public function eliminar();
-
     public function consultarPorParametro();
 
     public function consultarTodos();
+
+    public function eliminar();
 }
