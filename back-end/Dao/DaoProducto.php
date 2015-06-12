@@ -102,11 +102,12 @@ class DaoProducto implements IDaoProducto {
             $this->Producto->setPrecioActual($registro['precioActual']);
             $this->Producto->setEstado($registro['estado']);
             $this->Producto->setId($registro['id']);
-            $conexion = null;
-            return $this->Producto;
+
         }else{
-            return $this->Producto = null;
+            $this->Producto = null;
         }
+        $conexion = null;
+        return $this->Producto;
     }
 
     public function consultarPorParametro()
@@ -141,12 +142,13 @@ class DaoProducto implements IDaoProducto {
             $this->Producto->setPrecioActual($registro['precioActual']);
             $this->Producto->setEstado($registro['estado']);
             $this->Producto->setId($registro['id']);
-            $conexion = null;
-            return $this->Producto;
 
         } else {
-            return $this->Producto = null;
+            $this->Producto = null;
         }
+
+        $conexion = null;
+        return $this->Producto;
     }
 
     public function consultarTodos()
@@ -160,6 +162,7 @@ class DaoProducto implements IDaoProducto {
                                                 FROM ' . self::TABLA );
         $consulta->execute();
         $productos = $consulta->fetchAll();
+        $conexion = null;
         return $productos;
     }
 
@@ -173,6 +176,7 @@ class DaoProducto implements IDaoProducto {
             $conexion = null;
 
         }catch (Exception $e){
+            $conexion = null;
             echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
         }
     }

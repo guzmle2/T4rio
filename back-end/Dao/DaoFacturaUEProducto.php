@@ -17,7 +17,7 @@ class DaoFacturaUEProducto implements IDaoFacturaUEProducto {
 
 
     var $FacturaUEProducto;
-    const TABLA = 'factura_usuario_empresa_producto';
+    const TABLA = 'factura_usuario_$FacturaUEmpresa_producto';
 
     public function __construct(&$FacturaUEProducto)
     {
@@ -29,45 +29,51 @@ class DaoFacturaUEProducto implements IDaoFacturaUEProducto {
         $conexion = new Connect();
         $query = '';
 
-        if($this->Producto->getId() != null  )
+        if($this->$FacturaUEProducto->getId() != null  )
         {
-            if( $this->Producto->getNombre() != null && $this->Producto->getNombre() != '' &&
-                $this->Producto->getPrecioActual() != null && $this->Producto->getPrecioActual() != '' &&
-                $this->Producto->getEstado() != null && $this->Producto->getEstado() != ''){
-                $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'(nombre,precioActual, estado)
-                VALUES  (:nombre, :precioActual, :estado)');
-                $consulta->bindParam(':nombre', $this->Producto->getNombre());
-                $consulta->bindParam(':precioActual', $this->Producto->getPrecioActual());
-                $consulta->bindParam(':estado', $this->Producto->getEstado());
+            if( $this->$FacturaUEProducto->getEmpresa() != null &&
+                $this->$FacturaUEProducto->getProducto() != null &&
+                $this->$FacturaUEProducto->getCantidad() != null && $this->$FacturaUEProducto->getCantidad() != '' &&
+                $this->$FacturaUEProducto->getPrecioCompra() != null && $this->$FacturaUEProducto->getPrecioCompra() != '' &&
+                $this->$FacturaUEProducto->getPrecioCantidad() != null && $this->$FacturaUEProducto->getPrecioCantidad() != ''){
+                $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'(id_facturaUsuario$FacturaUEmpresa,id_producto, cantidad, precioCompra,precioCantidad)
+                VALUES  (:id_facturaUsuario$FacturaUEmpresa, :id_producto, :cantidad, :precioCompra, :precioCantidad)');
+                $consulta->bindParam(':id_facturaUsuario$FacturaUEmpresa', $this->$FacturaUEProducto->getFacturaUEmpresa()->getId());
+                $consulta->bindParam(':id_producto', $this->$FacturaUEProducto->getProducto()->getId());
+                $consulta->bindParam(':cantidad', $this->$FacturaUEProducto->getCantidad());
+                $consulta->bindParam(':precioCompra', $this->$FacturaUEProducto->getPrecioCompra());
+                $consulta->bindParam(':precioCantidad', $this->$FacturaUEProducto->getPrecioCantidad());
                 $consulta->execute();
 
+                $this->$FacturaUEProducto->setId($conexion->lastInsertId()) ;
+
             }else{
-                return $this->Producto = null;
+                return $this->$FacturaUEProducto = null;
             }
 
 
         }else{
 
-            if( $this->Producto->getNombre() != null){
+            if( $this->$FacturaUEProducto->getCantidad() != null){
                 if($query == ''){
-                    $query .='nombre = :nombre';
+                    $query .='cantidad = :cantidad';
                 }else{
-                    $query .=', nombre = :nombre';
+                    $query .=', cantidad = :cantidad';
                 }
             }
 
-            if( $this->Producto->getPrecioActual() != null){
+            if( $this->$FacturaUEProducto->getPrecioCompra() != null){
                 if($query == ''){
-                    $query .='precioActual = :precioActual';
+                    $query .='precioCompra = :precioCompra';
                 }else{
-                    $query .=', precioActual = :precioActual';
+                    $query .=', precioCompra = :precioCompra';
                 }
             }
 
 
-            if($this->Producto->getEstado() != null){
+            if($this->$FacturaUEProducto->getPrecioCantidad() != null){
                 if($query == ''){
-                    $query .='estado = :estado';
+                    $query .='precioCantidad = :precioCantidad';
                 }else{
                     $query .=', estado = :estado';
                 }
@@ -75,25 +81,48 @@ class DaoFacturaUEProducto implements IDaoFacturaUEProducto {
             }
             $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET '.$query.
                 ' WHERE id = :id');
-            $consulta->bindParam(':nombre', $this->Producto->getNombre());
-            $consulta->bindParam(':precioActual', $this->Producto->getPrecioActual());
-            $consulta->bindParam(':estado', $this->Producto->getEstado());
-            $consulta->bindParam(':id', $this->Producto->getId());
+            $consulta->bindParam(':cantidad', $this->$FacturaUEProducto->getCantidad());
+            $consulta->bindParam(':precioCompra', $this->$FacturaUEProducto->getPrecioCompra());
+            $consulta->bindParam(':precioCantidad', $this->$FacturaUEProducto->getPrecioCantidad());
+            $consulta->bindParam(':id', $this->$FacturaUEProducto->getId());
             $consulta->execute();
         }
-        $this->Producto->setId($conexion->lastInsertId()) ;
         $conexion = null;
-        return $this->Producto;
+        return $this->$FacturaUEProducto;
     }
 
     public function consultarPorId()
     {
-        // TODO: Implement consultarPorId() method.
+
     }
 
     public function consultarPorParametro()
     {
-        // TODO: Implement consultarPorParametro() method.
+        if ($this->FacturaUEProducto->getId() != null) {
+            $parametro = ' WHERE id = :parametro';
+            $valor = $this->FacturaUEProducto->getId();
+        } elseif ($this->FacturaUEProducto->getPrecioTotal() != null) {
+            $parametro = ' WHERE precioTotal = :parametro';
+            $valor = $this->FacturaUEProducto->getPrecioTotal();
+        }else {
+            $parametro = ' WHERE id = :parametro';
+            $valor = 0;
+        }
+        $conexion = new Connect();
+        $consulta = $conexion->prepare('SELECT factura_usuario_empresa_producto.id,
+                                          producto.nombre,
+                                          factura_usuario_empresa_producto.cantidad,
+                                          factura_usuario_empresa_producto.precioCompra,
+                                          factura_usuario_empresa_producto.precioCantidad
+                                        FROM '. self::TABLA .'
+                                          INNER JOIN producto
+    ON factura_usuario_empresa_producto.id_producto=producto.id; WHERE ' .$parametro);
+        $consulta->bindParam(':parametro', $valor);
+        $consulta->execute();
+        $facturasProductos = $consulta->fetchAll();
+        $conexion = null;
+        return $facturasProductos;
+
     }
 
     public function consultarTodos()

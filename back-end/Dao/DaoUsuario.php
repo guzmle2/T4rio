@@ -145,11 +145,11 @@ class DaoUsuario implements IDaoUsuario
             $this->Usuario->setTipo($registro['tipo']);
             $this->Usuario->setClave($registro['clave']);
             $this->Usuario->setId($registro['id']);
-            $conexion = null;
-            return $this->Usuario;
         }else{
-            return $this->Usuario = null;
+            $this->Usuario = null;
         }
+        $conexion = null;
+        return $this->Usuario;
     }
 
     public function consultarPorParametro()
@@ -196,12 +196,12 @@ class DaoUsuario implements IDaoUsuario
             $this->Usuario->setTipo($registro['tipo']);
             $this->Usuario->setClave($registro['clave']);
             $this->Usuario->setId($registro['id']);
-            $conexion = null;
-            return $this->Usuario;
 
         } else {
-            return $this->Usuario = null;
+            $this->Usuario = null;
         }
+        $conexion = null;
+        return $this->Usuario;
     }
 
     public function consultarTodos()
@@ -217,6 +217,7 @@ class DaoUsuario implements IDaoUsuario
                                                 FROM ' . self::TABLA );
         $consulta->execute();
         $usuarios = $consulta->fetchAll();
+        $conexion = null;
         return $usuarios;
     }
 
@@ -230,6 +231,7 @@ class DaoUsuario implements IDaoUsuario
             $conexion = null;
 
         }catch (Exception $e){
+            $conexion = null;
             echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
         }
     }

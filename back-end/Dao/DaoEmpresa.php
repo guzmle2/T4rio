@@ -111,11 +111,12 @@ class DaoEmpresa implements IDaoEmpresa {
             $this->Empresa->setDireccion($registro['direccion']);
             $this->Empresa->setCorre($registro['direccion']);
             $this->Empresa->setId($registro['id']);
-            $conexion = null;
-            return $this->Empresa;
+
         }else{
-            return $this->Empresa = null;
+            $this->Empresa = null;
         }
+        $conexion = null;
+        return $this->Empresa;
     }
 
     public function consultarPorParametro()
@@ -152,12 +153,12 @@ class DaoEmpresa implements IDaoEmpresa {
             $this->Empresa->setDireccion($registro['direccion']);
             $this->Empresa->setCorreo($registro['correo']);
             $this->Empresa->setId($registro['id']);
-            $conexion = null;
-            return $this->Empresa;
 
         } else {
-            return $this->Empresa = null;
+            $this->Empresa = null;
         }
+        $conexion = null;
+        return $this->Empresa;
     }
 
     public function consultarTodos()
@@ -172,6 +173,7 @@ class DaoEmpresa implements IDaoEmpresa {
                                                 FROM ' . self::TABLA );
         $consulta->execute();
         $empresas = $consulta->fetchAll();
+        $conexion = null;
         return $empresas;
     }
 
@@ -185,6 +187,7 @@ class DaoEmpresa implements IDaoEmpresa {
             $conexion = null;
 
         }catch (Exception $e){
+            $conexion = null;
             echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
         }
     }

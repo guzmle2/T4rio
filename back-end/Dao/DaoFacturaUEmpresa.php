@@ -118,10 +118,12 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             $conexion = null;
             $this->$FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
             $this->$FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
-            return $this->$FacturaUEmpresapresa;
+
         }else{
-            return $this->$FacturaUEmpresasa = null;
+            $this->$FacturaUEmpresasa = null;
         }
+        $conexion = null;
+        return $this->$FacturaUEmpresapresa;
     }
 
     public function consultarPorParametro()
@@ -153,10 +155,12 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             $conexion = null;
             $this->$FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
             $this->$FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
-            return $this->FacturaUEmpresa;
+
         } else {
-            return $this->FacturaUEmpresa = null;
+            $this->FacturaUEmpresa = null;
         }
+        $conexion = null;
+        return $this->FacturaUEmpresa;
     }
 
     public function consultarTodos()
@@ -170,6 +174,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
                                                 FROM ' . self::TABLA );
         $consulta->execute();
         $facturas = $consulta->fetchAll();
+        $conexion = null;
         return $facturas;
     }
 
@@ -183,6 +188,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             $conexion = null;
 
         }catch (Exception $e){
+            $conexion = null;
             echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
         }
     }
@@ -195,6 +201,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
         $consulta->bindParam(':id_empresa', $this->FacturaUEmpresa->getEmpresa()->getId());
         $consulta->execute();
         $facturas = $consulta->fetchAll();
+        $conexion = null;
         return $facturas;
     }
 
@@ -206,6 +213,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
         $consulta->bindParam(':id_usuario', $this->FacturaUEmpresa->getUsuario()->getId());
         $consulta->execute();
         $facturas = $consulta->fetchAll();
+        $conexion = null;
         return $facturas;
     }
 
@@ -234,6 +242,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             $conexion = null;
             return $this->FacturaUEmpresa->setUsuario($user);
         }else{
+            $conexion = null;
             return $this->FacturaUEmpresa->setUsuario(null);
         }
     }
@@ -255,7 +264,32 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             $conexion = null;
             return $this->FacturaUEmpresa->setEmpresa($empres);
         }else{
+            $conexion = null;
             return $this->FacturaUEmpresa->setEmpresa(null);
+        }
+    }
+
+
+    public function consultarPorIdParametro($id)
+    {
+        $conexion = new Connect();
+        $consulta = $conexion->prepare('SELECT id,id_usuario, id_empresa,fechaCreacion,precioTotal FROM '
+            . self::TABLA . ' WHERE id = :id');
+        $consulta->bindParam(':id', $id);
+        $consulta->execute();
+        $registro = $consulta->fetch();
+        if($registro){
+            $this->$FacturaUEmpresa->setFechaCreacion($registro['fechaCreacion']);
+            $this->$FacturaUEmpresa->setPrecionTotal($registro['precioTotal']);
+            $this->$FacturaUEmpresa->setId($registro['id']);
+            $conexion = null;
+            $this->$FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
+            $this->$FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
+            $conexion = null;
+            return $this->$FacturaUEmpresapresa;
+        }else{
+            $conexion = null;
+            return $this->$FacturaUEmpresasa = null;
         }
     }
 }
