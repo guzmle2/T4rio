@@ -7,7 +7,6 @@
  */
 namespace IDao;
 
-use IDao\IDaoBase;
 require_once 'IDaoBase.php';
 
 interface IDaoProducto extends IDaoBase {

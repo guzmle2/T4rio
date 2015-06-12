@@ -8,9 +8,7 @@
 
 namespace IDao;
 
-
-use IDao\IDaoBase;
-require_once 'IDaoBase.php';
+require 'IDaoBase.php';
 
 interface IDaoEmpresa extends IDaoBase{
 

@@ -32,7 +32,7 @@ class DaoProducto implements IDaoProducto {
         $conexion = new Connect();
         $query = '';
 
-        if($this->Producto->getId() != null  )
+        if($this->Producto->getId() == null  )
         {
             if( $this->Producto->getNombre() != null && $this->Producto->getNombre() != '' &&
                 $this->Producto->getPrecioActual() != null && $this->Producto->getPrecioActual() != '' &&

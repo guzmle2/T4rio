@@ -7,8 +7,7 @@
  */
 namespace IDao;
 
-use IDao\IDaoBase;
-
+require 'IDaoBase.php';
 
 interface IDaoUsuario extends IDaoBase
 {

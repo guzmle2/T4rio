@@ -8,7 +8,6 @@
 
 namespace Test;
 
-use Dao\DaoUsuario;
 use Entidad\Usuario;
 use Fabrica\FabricaDao;
 use PHPUnit_Framework_TestCase;

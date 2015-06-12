@@ -8,7 +8,7 @@
 
 namespace IDao;
 
-require_once 'IDaoBase.php';
+require 'IDaoBase.php';
 
 interface IDaoFacturaUEProducto extends IDaoBase
 {

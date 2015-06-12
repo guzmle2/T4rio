@@ -8,10 +8,8 @@
 
 namespace Entidad;
 
-
 use EntidadBase;
-
-require_once 'EntidadBase.php';
+include 'EntidadBase.php';
 
 class Producto extends EntidadBase {
 
