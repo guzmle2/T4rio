@@ -12,6 +12,7 @@
       <column name="nombre" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="rif" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="direccion" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="correo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="factura_usuario_empresa_ibfk_2" table="factura_usuario_empresa" schema="" catalog="t4rio" columns="id_empresa"/>
       <index name="unique_id" unique="true" columns="id"/>
