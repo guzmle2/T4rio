@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e65e7ae-5933-438a-93b5-0de7d743277c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Dao/DaoEmpresa.php" afterPath="$PROJECT_DIR$/back-end/Dao/DaoEmpresa.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Dao/DaoFacturaUEmpresa.php" afterPath="$PROJECT_DIR$/back-end/Dao/DaoFacturaUEmpresa.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Dao/DaoProducto.php" afterPath="$PROJECT_DIR$/back-end/Dao/DaoProducto.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Dao/DaoUsuario.php" afterPath="$PROJECT_DIR$/back-end/Dao/DaoUsuario.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Entidad/FacturaUEProducto.php" afterPath="$PROJECT_DIR$/back-end/Entidad/FacturaUEProducto.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Entidad/FacturaUEmpresa.php" afterPath="$PROJECT_DIR$/back-end/Entidad/FacturaUEmpresa.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/back-end/Contrato/IDaoFacturaUEmpresa.php" afterPath="$PROJECT_DIR$/back-end/Contrato/IDaoFacturaUEmpresa.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="T4rio.iws" />
@@ -695,7 +688,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433937635590</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="dao empresa y factura empresa">
+      <created>1434081147022</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1434081147022</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -703,6 +702,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32879046" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -720,7 +720,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="PHP-CGI Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39863715" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282313" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -744,7 +743,8 @@
     </option>
     <MESSAGE value="Users" />
     <MESSAGE value="Users modificar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Users modificar" />
+    <MESSAGE value="dao empresa y factura empresa" />
+    <option name="LAST_COMMIT_MESSAGE" value="dao empresa y factura empresa" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
