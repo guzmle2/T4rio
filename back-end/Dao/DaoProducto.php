@@ -43,9 +43,10 @@ class DaoProducto implements IDaoProducto {
                 $consulta->bindParam(':precioActual', $this->Producto->getPrecioActual());
                 $consulta->bindParam(':estado', $this->Producto->getEstado());
                 $consulta->execute();
+                $this->Producto->setId($conexion->lastInsertId()) ;
 
             }else{
-                return $this->Producto = null;
+                $this->Producto = null;
             }
 
 
@@ -84,7 +85,6 @@ class DaoProducto implements IDaoProducto {
             $consulta->bindParam(':id', $this->Producto->getId());
             $consulta->execute();
         }
-        $this->Producto->setId($conexion->lastInsertId()) ;
         $conexion = null;
         return $this->Producto;
     }
@@ -94,7 +94,7 @@ class DaoProducto implements IDaoProducto {
         $conexion = new Connect();
         $consulta = $conexion->prepare('SELECT id,nombre, precioActual,estado FROM '
             . self::TABLA . ' WHERE id = :id');
-        $consulta->bindParam(':id', $this->Usuario->getId());
+        $consulta->bindParam(':id', $this->Producto->getId());
         $consulta->execute();
         $registro = $consulta->fetch();
         if($registro){
@@ -121,9 +121,9 @@ class DaoProducto implements IDaoProducto {
         } elseif ($this->Producto->getPrecioActual() != null) {
             $parametro = ' WHERE precioActual = :parametro';
             $valor = $this->Producto->getPrecioActual();
-        } elseif ($this->Producto->estado() != null) {
+        } elseif ($this->Producto->getEstado() != null) {
             $parametro = ' WHERE estado = :parametro';
-            $valor = $this->Producto->estado();
+            $valor = $this->Producto->getEstado();
         }else {
             $parametro = ' WHERE id = :parametro';
             $valor = 0;

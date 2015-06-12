@@ -45,9 +45,10 @@ class DaoUsuario implements IDaoUsuario
                     $consulta->bindParam(':correo', $this->Usuario->getCorreo());
                     $consulta->bindParam(':clave', $this->Usuario->getClave());
                     $consulta->execute();
+                    $this->Usuario->setId($conexion->lastInsertId()) ;
 
                 }else{
-                    return $this->Usuario = null ;
+                    $this->Usuario = null ;
                 }
             }
 
@@ -119,8 +120,6 @@ class DaoUsuario implements IDaoUsuario
 
 
         }
-
-        $this->Usuario->setId($conexion->lastInsertId()) ;
         $conexion = null;
 
         return $this->Usuario;

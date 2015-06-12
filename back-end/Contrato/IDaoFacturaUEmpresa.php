@@ -13,5 +13,9 @@ require_once 'IDaoBase.php';
 
 interface IDaoFacturaUEmpresa extends IDaoBase {
 
+    public function consultarXEmpresa();
+
+    public function consultarXUsuario();
+
 
 }

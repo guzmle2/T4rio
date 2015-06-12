@@ -28,26 +28,30 @@ class DaoEmpresa implements IDaoEmpresa {
         $conexion = new Connect();
         $query = '';
 
-        if($this->Producto->getId() != null  )
+        if($this->Empresa->getId() != null  )
         {
-            if( $this->Producto->getNombre() != null && $this->Producto->getNombre() != '' &&
-                $this->Producto->getPrecioActual() != null && $this->Producto->getPrecioActual() != '' &&
-                $this->Producto->getEstado() != null && $this->Producto->getEstado() != ''){
-                $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'(nombre,precioActual, estado)
-                VALUES  (:nombre, :precioActual, :estado)');
-                $consulta->bindParam(':nombre', $this->Producto->getNombre());
-                $consulta->bindParam(':precioActual', $this->Producto->getPrecioActual());
-                $consulta->bindParam(':estado', $this->Producto->getEstado());
+            if( $this->Empresa->getNombre() != null && $this->Empresa->getNombre() != '' &&
+                $this->Empresa->getRif() != null && $this->Empresa->getRif() != '' &&
+                $this->Empresa->getDireccion() != null && $this->Empresa->getDireccion() != '' &&
+                $this->Empresa->getCorreo() != null && $this->Empresa->getCorreo() != ''){
+
+                $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'(nombre,rif, direccion,correo)
+                VALUES  (:nombre,:rif, :direccion,:correo)');
+                $consulta->bindParam(':nombre', $this->Empresa->getNombre());
+                $consulta->bindParam(':rif', $this->Empresa->rif());
+                $consulta->bindParam(':direccion', $this->Empresa->direccion());
+                $consulta->bindParam(':correo', $this->Empresa->correo());
                 $consulta->execute();
+                $this->Empresa->setId($conexion->lastInsertId()) ;
 
             }else{
-                return $this->Producto = null;
+                $this->Empresa = null;
             }
 
 
         }else{
 
-            if( $this->Producto->getNombre() != null){
+            if( $this->Empresa->getNombre() != null){
                 if($query == ''){
                     $query .='nombre = :nombre';
                 }else{
@@ -55,53 +59,133 @@ class DaoEmpresa implements IDaoEmpresa {
                 }
             }
 
-            if( $this->Producto->getPrecioActual() != null){
+            if( $this->Empresa->getRif() != null){
                 if($query == ''){
-                    $query .='precioActual = :precioActual';
+                    $query .='rif = :rif';
                 }else{
-                    $query .=', precioActual = :precioActual';
+                    $query .=', rif = :rif';
                 }
             }
 
 
-            if($this->Producto->getEstado() != null){
+            if($this->Empresa->getDireccion() != null){
                 if($query == ''){
-                    $query .='estado = :estado';
+                    $query .='direccion = :direccion';
                 }else{
-                    $query .=', estado = :estado';
+                    $query .=', direccion = :direccion';
+                }
+
+            }
+
+            if($this->Empresa->getCorreo() != null){
+                if($query == ''){
+                    $query .='correo = :correo';
+                }else{
+                    $query .=', correo = :correo';
                 }
 
             }
             $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET '.$query.
                 ' WHERE id = :id');
-            $consulta->bindParam(':nombre', $this->Producto->getNombre());
-            $consulta->bindParam(':precioActual', $this->Producto->getPrecioActual());
-            $consulta->bindParam(':estado', $this->Producto->getEstado());
-            $consulta->bindParam(':id', $this->Producto->getId());
+            $consulta->bindParam(':nombre', $this->Empresa->getNombre());
+            $consulta->bindParam(':precioActual', $this->Empresa->getPrecioActual());
+            $consulta->bindParam(':estado', $this->Empresa->getEstado());
+            $consulta->bindParam(':id', $this->Empresa->getId());
             $consulta->execute();
         }
-        $this->Producto->setId($conexion->lastInsertId()) ;
         $conexion = null;
-        return $this->Producto;
+        return $this->Empresa;
     }
 
     public function consultarPorId()
     {
-        // TODO: Implement consultarPorId() method.
+        $conexion = new Connect();
+        $consulta = $conexion->prepare('SELECT id,nombre, rif,direccion,correo FROM '
+            . self::TABLA . ' WHERE id = :id');
+        $consulta->bindParam(':id', $this->Empresa->getId());
+        $consulta->execute();
+        $registro = $consulta->fetch();
+        if($registro){
+            $this->Empresa->setNombre($registro['nombre']);
+            $this->Empresa->setRif($registro['rif']);
+            $this->Empresa->setDireccion($registro['direccion']);
+            $this->Empresa->setCorre($registro['direccion']);
+            $this->Empresa->setId($registro['id']);
+            $conexion = null;
+            return $this->Empresa;
+        }else{
+            return $this->Empresa = null;
+        }
     }
 
     public function consultarPorParametro()
     {
-        // TODO: Implement consultarPorParametro() method.
+        $conexion = new Connect();
+        if ($this->Empresa->getId() != null) {
+            $parametro = ' WHERE id = :parametro';
+            $valor = $this->Empresa->getId();
+        } elseif ($this->Empresa->getNombre() != null) {
+            $parametro = ' WHERE nombre = :parametro';
+            $valor = $this->Empresa->getNombre();
+        } elseif ($this->Empresa->getRif() != null) {
+            $parametro = ' WHERE rif = :parametro';
+            $valor = $this->Empresa->getRif();
+        } elseif ($this->Empresa->getDireccion() != null) {
+            $parametro = ' WHERE direccion = :parametro';
+            $valor = $this->Empresa->getDireccion();
+        }else {
+            $parametro = ' WHERE id = :parametro';
+            $valor = 0;
+        }
+        $consulta = $conexion->prepare('SELECT id,
+                                                nombre,
+                                                rif,
+                                                direccion,
+                                                correo
+                                                FROM ' . self::TABLA . $parametro);
+        $consulta->bindParam(':parametro', $valor);
+        $consulta->execute();
+        $registro = $consulta->fetch();
+        if ($registro) {
+            $this->Empresa->setNombre($registro['nombre']);
+            $this->Empresa->setRif($registro['rif']);
+            $this->Empresa->setDireccion($registro['direccion']);
+            $this->Empresa->setCorreo($registro['correo']);
+            $this->Empresa->setId($registro['id']);
+            $conexion = null;
+            return $this->Empresa;
+
+        } else {
+            return $this->Empresa = null;
+        }
     }
 
     public function consultarTodos()
     {
-        // TODO: Implement consultarTodos() method.
+        $conexion = new Connect();
+
+        $consulta = $conexion->prepare('SELECT id,
+                                                nombre,
+                                                rif,
+                                                direccion,
+                                                correo
+                                                FROM ' . self::TABLA );
+        $consulta->execute();
+        $empresas = $consulta->fetchAll();
+        return $empresas;
     }
 
     public function eliminar()
     {
-        // TODO: Implement eliminar() method.
+        $conexion = new Connect();
+        try{
+            $consulta = $conexion->prepare( 'DELETE FROM ' . self::TABLA .' WHERE id = :parametro');
+            $consulta->bindParam(':parametro', $this->Empresa->getId());
+            $consulta->execute();
+            $conexion = null;
+
+        }catch (Exception $e){
+            echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
+        }
     }
 }
