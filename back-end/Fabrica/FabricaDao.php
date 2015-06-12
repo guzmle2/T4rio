@@ -8,6 +8,9 @@
 
 namespace Fabrica;
 
+use Dao\DaoEmpresa;
+use Dao\DaoFacturaUEmpresa;
+use Dao\DaoFacturaUEProducto;
 use Dao\DaoProducto;
 use Dao\DaoUsuario;
 require_once '..\Dao\DaoUsuario.php';
@@ -21,6 +24,18 @@ class FabricaDao {
 
     public function obtenerDaoProducto(&$Producto){
         return new DaoProducto($Producto);
+    }
+
+    public function obtenerDaoEmpresa(&$Empresa){
+        return new DaoEmpresa($Empresa);
+    }
+
+    public function obtenerDaoFacturaUEmpresa(&$FacturaUEmpresa){
+        return new DaoFacturaUEmpresa($FacturaUEmpresa);
+    }
+
+    public function obtenerDaoFacturaUEProducto(&$FacturaUEProducto){
+        return new DaoFacturaUEProducto($FacturaUEProducto);
     }
 
 }
