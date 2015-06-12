@@ -99,13 +99,13 @@ class DaoFacturaUEProducto implements IDaoFacturaUEProducto {
     public function consultarPorParametro()
     {
         if ($this->FacturaUEProducto->getId() != null) {
-            $parametro = ' WHERE id = :parametro';
+            $parametro = ' factura_usuario_empresa_producto.id = :parametro';
             $valor = $this->FacturaUEProducto->getId();
-        } elseif ($this->FacturaUEProducto->getPrecioTotal() != null) {
-            $parametro = ' WHERE precioTotal = :parametro';
-            $valor = $this->FacturaUEProducto->getPrecioTotal();
+        } elseif ($this->FacturaUEProducto->getProducto() != null) {
+            $parametro = ' producto.nombre = :parametro';
+            $valor = $this->FacturaUEProducto->getProducto()->getNombre();
         }else {
-            $parametro = ' WHERE id = :parametro';
+            $parametro = ' id = :parametro';
             $valor = 0;
         }
         $conexion = new Connect();
@@ -127,11 +127,33 @@ class DaoFacturaUEProducto implements IDaoFacturaUEProducto {
 
     public function consultarTodos()
     {
-        // TODO: Implement consultarTodos() method.
+        $conexion = new Connect();
+        $consulta = $conexion->prepare('SELECT factura_usuario_empresa_producto.id,
+                                          producto.nombre,
+                                          factura_usuario_empresa_producto.cantidad,
+                                          factura_usuario_empresa_producto.precioCompra,
+                                          factura_usuario_empresa_producto.precioCantidad
+                                        FROM '. self::TABLA .'
+                                          INNER JOIN producto
+    ON factura_usuario_empresa_producto.id_producto=producto.id;');
+        $consulta->execute();
+        $facturasProductos = $consulta->fetchAll();
+        $conexion = null;
+        return $facturasProductos;
     }
 
     public function eliminar()
     {
-        // TODO: Implement eliminar() method.
+        $conexion = new Connect();
+        try{
+            $consulta = $conexion->prepare( 'DELETE FROM ' . self::TABLA .' WHERE id = :parametro');
+            $consulta->bindParam(':parametro', $this->FacturaUEProducto->getId());
+            $consulta->execute();
+            $conexion = null;
+
+        }catch (Exception $e){
+            $conexion = null;
+            echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
+        }
     }
 }
