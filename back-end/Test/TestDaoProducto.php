@@ -25,7 +25,7 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
         $Product = new Producto();
         $Product->setNombre("Producto #1");
         $Product->setPrecioActual("1200");
-        $Product->setEstado("");
+        $Product->setEstado("DISPONIBLE");
         $this->Producto = $Product;
     }
 
@@ -41,11 +41,9 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
     }
 
     public function testAgregar(){
-//
-//        $dao = FabricaDao::obtenerDaoUsuario($this->Producto);
-//        $dao->agrega_modifica();
-//        $this->assertTrue($dao->Usuario->getId() != 0);
-//        $this->Producto->setId($dao->Usuario->getId());
+        $dao = FabricaDao::obtenerDaoProducto($this->Producto);
+        $dao->agrega_modifica();
+        $this->assertTrue($dao->Producto->getId()!=0);
     }
 
     /**
