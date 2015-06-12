@@ -40,6 +40,9 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
         $this->assertTrue($dao->Producto==null);
     }
 
+    /**
+     * Prueba de dao agregar
+     */
     public function testAgregar(){
         $dao = FabricaDao::obtenerDaoProducto($this->Producto);
         $dao->agrega_modifica();
@@ -50,22 +53,21 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
      * prueba dao de modificar usuario
      */
     public function testModifcar(){
-/*        $this->Producto->setNombre("Nombre Modificado");
-        $dao = FabricaDao::obtenerDaoUsuario($this->Producto);
+        $this->Producto->setNombre("Nombre Modificado");
+        $dao = FabricaDao::obtenerDaoProducto($this->Producto);
         $dao->agrega_modifica();
         $dao->consultarPorId();
-        $this->assertEquals($dao->Usuario->getNombre(), $this->Producto->getNombre());*/
+        $this->assertEquals($dao->Producto->getNombre(), $this->Producto->getNombre());
     }
 
     /**
      * Prueba unitaria que elimina
      */
     public function testEliminar(){
-/*        $dao = FabricaDao::obtenerDaoUsuario($this->Producto);
+        $dao = FabricaDao::obtenerDaoProducto($this->Producto);
         $dao->eliminar();
         $dao->consultarPorId();
-        $this->assertTrue($dao->Usuario == null);*/
-
+        $this->assertTrue($dao->Producto == null);
     }
 
 
@@ -73,19 +75,19 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
      * Prueba unitaria que consulta todos
      */
     public function testConsultarTodos(){
-/*        $dao = FabricaDao::obtenerDaoUsuario($this->Producto);
+        $dao = FabricaDao::obtenerDaoUsuario($this->Producto);
         $registros = $dao->consultarTodos();
-        $this->assertTrue($registros != null);*/
+        $this->assertTrue($registros != null);
     }
 
     /**
      * metodo que prueba la consulta por parametro
      */
     public function testConsultarPorParametro(){
-/*        $usr = new Usuario();
-        $usr->setCorreo("ronoel54@gmail.com");
-        $dao = FabricaDao::obtenerDaoUsuario($usr);
-        $this->assertEquals($dao->Usuario->getCorreo(), $usr->getCorreo());*/
+        $usr = new Producto();
+        $usr->setId(1);
+        $dao = FabricaDao::obtenerDaoProducto($usr);
+        $this->assertEquals($dao->Producto->getId(), $usr->getId());
     }
 
 
@@ -93,11 +95,11 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
      * metodo que prueba la consulta por parametro
      */
     public function testConsultarPorId(){
-/*        $usr = new Usuario();
+        $usr = new Producto();
         $usr->setId(1);
-        $dao = FabricaDao::obtenerDaoUsuario($usr);
+        $dao = FabricaDao::obtenerDaoProducto($usr);
         $dao->consultarPorId();
-        $this->assertEquals($dao->Usuario->getId(), $usr->getId());*/
+        $this->assertEquals($dao->Producto->getId(), $usr->getId());
     }
 
 
