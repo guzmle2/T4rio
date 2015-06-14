@@ -9,8 +9,10 @@
 namespace Entidad;
 
 use EntidadBase;
+include_once  'EntidadBase.php';
+require'Usuario.php';
+require'Empresa.php';
 
-require_once 'EntidadBase.php';
 class FacturaUEProducto extends EntidadBase{
 
     /**

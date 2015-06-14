@@ -7,6 +7,7 @@
  */
 
 namespace Dao;
+use Entidad\Usuario;
 use IDao\IDaoUsuario;
 
 require_once 'Connect.php';
@@ -234,5 +235,39 @@ class DaoUsuario implements IDaoUsuario
             $conexion = null;
             echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
         }
+    }
+
+    public function consultarPorIdParametro($id)
+    {
+        $conexion = new Connect();
+            $parametro = ' WHERE id = :parametro';
+            $valor = $id;
+
+        $consulta = $conexion->prepare('SELECT id,
+                                                nombre,
+                                                apellido,
+                                                cedula,
+                                                tipo,
+                                                correo,
+                                                clave
+                                                FROM ' . self::TABLA . $parametro);
+        $consulta->bindParam(':parametro', $valor);
+        $consulta->execute();
+        $registro = $consulta->fetch();
+        if ($registro) {
+            $Usuario = new Usuario();
+            $Usuario->setNombre($registro['nombre']);
+            $Usuario->setApellido($registro['apellido']);
+            $Usuario->setCedula($registro['cedula']);
+            $Usuario->setCorreo($registro['correo']);
+            $Usuario->setTipo($registro['tipo']);
+            $Usuario->setClave($registro['clave']);
+            $Usuario->setId($registro['id']);
+
+        } else {
+            $Usuario = null;
+        }
+        $conexion = null;
+        return $Usuario;
     }
 }

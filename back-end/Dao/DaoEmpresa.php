@@ -8,6 +8,7 @@
 
 namespace Dao;
 
+use Entidad\Empresa;
 use IDao\IDaoEmpresa;
 
 require_once 'Connect.php';
@@ -190,5 +191,31 @@ class DaoEmpresa implements IDaoEmpresa {
             $conexion = null;
             echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
         }
+    }
+
+    public function consultarPorIdParametro($id)
+    {
+        $conexion = new Connect();
+        $parametro = ' WHERE id = :parametro';
+        $valor = $id;
+
+        $consulta = $conexion->prepare('SELECT id,nombre, rif,direccion,correo FROM '
+            . self::TABLA . $parametro);
+        $consulta->bindParam(':parametro', $valor);
+        $consulta->execute();
+        $registro = $consulta->fetch();
+        if($registro){
+            $Empresa = new Empresa();
+            $Empresa->setNombre($registro['nombre']);
+            $Empresa->setRif($registro['rif']);
+            $Empresa->setDireccion($registro['direccion']);
+            $Empresa->setCorreo($registro['correo']);
+            $Empresa->setId($registro['id']);
+
+        }else{
+            $Empresa = null;
+        }
+        $conexion = null;
+        return $Empresa;
     }
 }

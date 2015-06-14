@@ -7,10 +7,10 @@
  */
 
 namespace Entidad;
-
 use EntidadBase;
 
-require_once 'EntidadBase.php';
+include_once  'EntidadBase.php';
+
 class FacturaUEmpresa extends EntidadBase {
 
     /**
@@ -33,7 +33,11 @@ class FacturaUEmpresa extends EntidadBase {
      */
     var $precioTotal;
 
-    function __construct(){ }
+    function __construct(){
+    $this->Usuario = new Usuario();
+    $this->Empresa = new Empresa();
+
+    }
 
 
     /**

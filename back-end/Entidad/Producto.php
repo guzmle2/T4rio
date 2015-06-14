@@ -9,7 +9,7 @@
 namespace Entidad;
 
 use EntidadBase;
-include 'EntidadBase.php';
+include_once  'EntidadBase.php';
 
 class Producto extends EntidadBase {
 

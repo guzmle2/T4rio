@@ -16,26 +16,28 @@ use Dao\DaoUsuario;
 require_once '..\Dao\DaoUsuario.php';
 require_once '..\Dao\DaoProducto.php';
 require_once '..\Dao\DaoEmpresa.php';
+require_once '..\Dao\DaoFacturaUEmpresa.php';
+require_once '..\Dao\DaoFacturaUEProducto.php';
 
 class FabricaDao {
 
-    public function obtenerDaoUsuario(&$Usuario){
+    public static function obtenerDaoUsuario(&$Usuario){
         return new DaoUsuario($Usuario);
     }
 
-    public function obtenerDaoProducto(&$Producto){
+    public static function obtenerDaoProducto(&$Producto){
         return new DaoProducto($Producto);
     }
 
-    public function obtenerDaoEmpresa(&$Empresa){
+    public static function obtenerDaoEmpresa(&$Empresa){
         return new DaoEmpresa($Empresa);
     }
 
-    public function obtenerDaoFacturaUEmpresa(&$FacturaUEmpresa){
+    public static function obtenerDaoFacturaUEmpresa(&$FacturaUEmpresa){
         return new DaoFacturaUEmpresa($FacturaUEmpresa);
     }
 
-    public function obtenerDaoFacturaUEProducto(&$FacturaUEProducto){
+    public static function obtenerDaoFacturaUEProducto(&$FacturaUEProducto){
         return new DaoFacturaUEProducto($FacturaUEProducto);
     }
 

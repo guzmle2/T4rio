@@ -7,12 +7,11 @@
  */
 
 namespace Dao;
-use Entidad\Empresa;
-use Entidad\Usuario;
 use IDao\IDaoFacturaUEmpresa;
 
 require_once 'Connect.php';
 require_once '../Contrato/IDaoFacturaUEmpresa.php';
+require_once 'DaoUsuario.php';
 
 class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
 
@@ -34,30 +33,30 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
         $conexion = new Connect();
         $query = '';
 
-        if($this->$FacturaUEmpresa->getId() != null  )
+        if($this->FacturaUEmpresa->getId() == null  )
         {
-            if( $this->$FacturaUEmpresa->getEmpresa() != null && $this->$FacturaUEmpresa->getUsuario() != null &&
-                $this->$FacturaUEmpresa->getFechaCreacion() != null && $this->$FacturaUEmpresa->getFechaCreacion() != '' &&
-                $this->$FacturaUEmpresa->getPrecioTotal() != null && $this->$FacturaUEmpresa->getPrecioTotal() != '' ){
+            if( $this->FacturaUEmpresa->getEmpresa() != null && $this->FacturaUEmpresa->getUsuario() != null &&
+                $this->FacturaUEmpresa->getFechaCreacion() != null && $this->FacturaUEmpresa->getFechaCreacion() != '' &&
+                $this->FacturaUEmpresa->getPrecioTotal() != null && $this->FacturaUEmpresa->getPrecioTotal() != '' ){
 
                 $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'
                 (id_usuario,id_empresa, fechaCreacion,precioTotal)
                 VALUES  (:id_usuario,:id_empresa, :fechaCreacion,:precioTotal)');
-                $consulta->bindParam(':id_usuario', $this->$FacturaUEmpresa->getUsuario()->getId());
-                $consulta->bindParam(':id_empresa', $this->$FacturaUEmpresa->getEmpresa()->getId());
-                $consulta->bindParam(':fechaCreacion', $this->$FacturaUEmpresa->getFechaCreacion());
-                $consulta->bindParam(':precioTotal', $this->$FacturaUEmpresa->getPrecioTotal());
+                $consulta->bindParam(':id_usuario', $this->FacturaUEmpresa->getUsuario()->getId());
+                $consulta->bindParam(':id_empresa', $this->FacturaUEmpresa->getEmpresa()->getId());
+                $consulta->bindParam(':fechaCreacion', $this->FacturaUEmpresa->getFechaCreacion());
+                $consulta->bindParam(':precioTotal', $this->FacturaUEmpresa->getPrecioTotal());
                 $consulta->execute();
-                $this->$FacturaUEmpresa->setId($conexion->lastInsertId()) ;
+                $this->FacturaUEmpresa->setId($conexion->lastInsertId()) ;
 
             }else{
-                $this->$FacturaUEmpresa = null;
+                $this->FacturaUEmpresa = null;
             }
 
 
         }else{
 
-            if( $this->$FacturaUEmpresa->getUsuario() != null){
+            if( $this->FacturaUEmpresa->getUsuario() != null){
                 if($query == ''){
                     $query .='id_usuario = :id_usuario';
                 }else{
@@ -65,7 +64,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
                 }
             }
 
-            if( $this->$FacturaUEmpresa->getEmpresa() != null){
+            if( $this->FacturaUEmpresa->getEmpresa() != null){
                 if($query == ''){
                     $query .='id_empresa = :id_empresa';
                 }else{
@@ -74,7 +73,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             }
 
 
-            if($this->$FacturaUEmpresa->getFechaCreacion() != null){
+            if($this->FacturaUEmpresa->getFechaCreacion() != null){
                 if($query == ''){
                     $query .='fechaCreacion = :fechaCreacion';
                 }else{
@@ -83,7 +82,7 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
 
             }
 
-            if($this->$FacturaUEmpresa->getPrecioTotal() != null){
+            if($this->FacturaUEmpresa->getPrecioTotal() != null){
                 if($query == ''){
                     $query .='precioTotal = :precioTotal';
                 }else{
@@ -93,14 +92,14 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             }
             $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET '.$query.
                 ' WHERE id = :id');
-            $consulta->bindParam(':id_usuario', $this->$FacturaUEmpresa->getUsuario()->getId());
-            $consulta->bindParam(':id_Empresa', $this->$FacturaUEmpresa->getEmpresa()->getId());
-            $consulta->bindParam(':fechaCreacion', $this->$FacturaUEmpresa->getFechaCreacion());
-            $consulta->bindParam(':precioTotal', $this->$FacturaUEmpresa->getPrecioTotal());
+            $consulta->bindParam(':id_usuario', $this->FacturaUEmpresa->getUsuario()->getId());
+            $consulta->bindParam(':id_Empresa', $this->FacturaUEmpresa->getEmpresa()->getId());
+            $consulta->bindParam(':fechaCreacion', $this->FacturaUEmpresa->getFechaCreacion());
+            $consulta->bindParam(':precioTotal', $this->FacturaUEmpresa->getPrecioTotal());
             $consulta->execute();
         }
         $conexion = null;
-        return $this->$FacturaUEmpresa;
+        return $this->FacturaUEmpresa;
     }
 
     public function consultarPorId()
@@ -108,22 +107,22 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
         $conexion = new Connect();
         $consulta = $conexion->prepare('SELECT id,id_usuario, id_empresa,fechaCreacion,precioTotal FROM '
             . self::TABLA . ' WHERE id = :id');
-        $consulta->bindParam(':id', $this->Empresa->getId());
+        $consulta->bindParam(':id', $this->FacturaUEmpresa->getId());
         $consulta->execute();
         $registro = $consulta->fetch();
         if($registro){
-            $this->$FacturaUEmpresa->setFechaCreacion($registro['fechaCreacion']);
-            $this->$FacturaUEmpresa->setPrecionTotal($registro['precioTotal']);
-            $this->$FacturaUEmpresa->setId($registro['id']);
+            $this->FacturaUEmpresa->setFechaCreacion($registro['fechaCreacion']);
+            $this->FacturaUEmpresa->setPrecioTotal($registro['precioTotal']);
+            $this->FacturaUEmpresa->setId($registro['id']);
             $conexion = null;
-            $this->$FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
-            $this->$FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
+            $this->FacturaUEmpresa->setUsuario(DaoUsuario::consultarPorIdParametro($registro['id_usuario']));
+            $this->FacturaUEmpresa->setEmpresa(DaoEmpresa::consultarPorIdParametro($registro['id_empresa']));
 
         }else{
-            $this->$FacturaUEmpresasa = null;
+            $this->FacturaUEmpresa = null;
         }
         $conexion = null;
-        return $this->$FacturaUEmpresapresa;
+        return $this->FacturaUEmpresa;
     }
 
     public function consultarPorParametro()
@@ -153,8 +152,8 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
             $this->FacturaUEmpresa->setPrecioTotal($registro['precioTotal']);
             $this->FacturaUEmpresa->setId($registro['id']);
             $conexion = null;
-            $this->$FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
-            $this->$FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
+            $this->FacturaUEmpresa->setUsuario(DaoUsuario::consultarPorIdParametro($registro['id_usuario']));
+            $this->FacturaUEmpresa->setEmpresa(DaoEmpresa::consultarPorIdParametro($registro['id_empresa']));
 
         } else {
             $this->FacturaUEmpresa = null;
@@ -167,10 +166,10 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
     {
         $conexion = new Connect();
         $consulta = $conexion->prepare('SELECT id,
-                                                nombre,
-                                                rif,
-                                                direccion,
-                                                correo
+                                                id_usuario,
+                                                id_empresa,
+                                                fechaCreacion,
+                                                precioTotal
                                                 FROM ' . self::TABLA );
         $consulta->execute();
         $facturas = $consulta->fetchAll();
@@ -217,59 +216,6 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
         return $facturas;
     }
 
-    public function consultarUsuario($id)
-    {
-        $conexion = new Connect();
-        $consulta = $conexion->prepare('SELECT id,nombre,
-                                                apellido,
-                                                cedula,
-                                                tipo,
-                                                correo,
-                                                clave
-                                                FROM usuario WHERE id = :id');
-        $consulta->bindParam(':id', $id);
-        $consulta->execute();
-        $registro = $consulta->fetch();
-        if($registro){
-            $user = new Usuario();
-            $user->setNombre($registro['nombre']);
-            $user->setApellido($registro['apellido']);
-            $user->setCedula($registro['cedula']);
-            $user->setCorreo($registro['correo']);
-            $user->setTipo($registro['tipo']);
-            $user->setClave($registro['clave']);
-            $user->setId($registro['id']);
-            $conexion = null;
-            return $this->FacturaUEmpresa->setUsuario($user);
-        }else{
-            $conexion = null;
-            return $this->FacturaUEmpresa->setUsuario(null);
-        }
-    }
-
-    public function consultarEmpresa($id_empresa)
-    {
-        $conexion = new Connect();
-        $consulta = $conexion->prepare('SELECT id,nombre, rif,direccion,correo FROM empresa WHERE id = :id');
-        $consulta->bindParam(':id', $id_empresa);
-        $consulta->execute();
-        $registro = $consulta->fetch();
-        if($registro){
-            $empres = new Empresa();
-            $empres->setNombre($registro['nombre']);
-            $empres->setRif($registro['rif']);
-            $empres->setDireccion($registro['direccion']);
-            $empres->setCorreo($registro['direccion']);
-            $empres->setId($registro['id']);
-            $conexion = null;
-            return $this->FacturaUEmpresa->setEmpresa($empres);
-        }else{
-            $conexion = null;
-            return $this->FacturaUEmpresa->setEmpresa(null);
-        }
-    }
-
-
     public function consultarPorIdParametro($id)
     {
         $conexion = new Connect();
@@ -279,17 +225,17 @@ class DaoFacturaUEmpresa implements IDaoFacturaUEmpresa {
         $consulta->execute();
         $registro = $consulta->fetch();
         if($registro){
-            $this->$FacturaUEmpresa->setFechaCreacion($registro['fechaCreacion']);
-            $this->$FacturaUEmpresa->setPrecionTotal($registro['precioTotal']);
-            $this->$FacturaUEmpresa->setId($registro['id']);
+            $this->FacturaUEmpresa->setFechaCreacion($registro['fechaCreacion']);
+            $this->FacturaUEmpresa->setPrecionTotal($registro['precioTotal']);
+            $this->FacturaUEmpresa->setId($registro['id']);
             $conexion = null;
-            $this->$FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
-            $this->$FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
+            $this->FacturaUEmpresa->setUsuario(DaoFacturaUEmpresa::consultarUsuario($registro['id_usuario']));
+            $this->FacturaUEmpresa->setEmpresa(DaoFacturaUEmpresa::consultarEmpresa($registro['id_empresa']));
             $conexion = null;
-            return $this->$FacturaUEmpresapresa;
+            return $this->FacturaUEmpresa;
         }else{
             $conexion = null;
-            return $this->$FacturaUEmpresasa = null;
+            return $this->FacturaUEmpresa = null;
         }
     }
 }

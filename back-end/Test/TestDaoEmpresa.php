@@ -64,15 +64,6 @@ class TestDaoEmpresa extends PHPUnit_Framework_TestCase implements TestBase {
         $this->assertEquals($dao->Empresa->getNombre(), $this->Empresa->getNombre());
     }
 
-    /**
-     * Prueba unitaria que elimina
-     */
-    public function testEliminar(){
-        $dao = FabricaDao::obtenerDaoEmpresa($this->Empresa);
-        $dao->eliminar();
-        $dao->consultarPorId();
-        $this->assertTrue($dao->Empresa == null);
-    }
 
 
     /**
@@ -107,6 +98,15 @@ class TestDaoEmpresa extends PHPUnit_Framework_TestCase implements TestBase {
     }
 
 
+    /**
+     * Prueba unitaria que elimina
+     */
+    public function testEliminar(){
+        $dao = FabricaDao::obtenerDaoEmpresa($this->Empresa);
+        $dao->eliminar();
+        $dao->consultarPorId();
+        $this->assertTrue($dao->Empresa == null);
+    }
 
 
     /**

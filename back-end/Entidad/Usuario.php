@@ -8,7 +8,7 @@
 
 namespace Entidad;
 
-include 'EntidadBase.php';
+include_once  'EntidadBase.php';
 use EntidadBase;
 
 
