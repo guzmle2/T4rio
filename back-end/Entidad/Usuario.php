@@ -123,4 +123,5 @@ class Usuario extends EntidadBase {
     }
 
 
+
 }

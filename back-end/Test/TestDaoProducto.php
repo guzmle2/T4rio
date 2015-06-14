@@ -75,7 +75,7 @@ class TestDaoProducto extends PHPUnit_Framework_TestCase implements TestBase {
      * Prueba unitaria que consulta todos
      */
     public function testConsultarTodos(){
-        $dao = FabricaDao::obtenerDaoUsuario($this->Producto);
+        $dao = FabricaDao::obtenerDaoProducto($this->Producto);
         $registros = $dao->consultarTodos();
         $this->assertTrue($registros != null);
     }

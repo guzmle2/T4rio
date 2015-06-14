@@ -16,7 +16,7 @@ require_once '../Contrato/IDaoEmpresa.php';
 class DaoEmpresa implements IDaoEmpresa {
 
     var $Empresa;
-    const TABLA = 'factura_usuario_empresa';
+    const TABLA = 'empresa';
 
     public function __construct(&$Empresa)
     {
@@ -28,7 +28,7 @@ class DaoEmpresa implements IDaoEmpresa {
         $conexion = new Connect();
         $query = '';
 
-        if($this->Empresa->getId() != null  )
+        if($this->Empresa->getId() == null  )
         {
             if( $this->Empresa->getNombre() != null && $this->Empresa->getNombre() != '' &&
                 $this->Empresa->getRif() != null && $this->Empresa->getRif() != '' &&
@@ -38,9 +38,9 @@ class DaoEmpresa implements IDaoEmpresa {
                 $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA .'(nombre,rif, direccion,correo)
                 VALUES  (:nombre,:rif, :direccion,:correo)');
                 $consulta->bindParam(':nombre', $this->Empresa->getNombre());
-                $consulta->bindParam(':rif', $this->Empresa->rif());
-                $consulta->bindParam(':direccion', $this->Empresa->direccion());
-                $consulta->bindParam(':correo', $this->Empresa->correo());
+                $consulta->bindParam(':rif', $this->Empresa->getRif());
+                $consulta->bindParam(':direccion', $this->Empresa->getDireccion());
+                $consulta->bindParam(':correo', $this->Empresa->getCorreo());
                 $consulta->execute();
                 $this->Empresa->setId($conexion->lastInsertId()) ;
 
@@ -88,9 +88,9 @@ class DaoEmpresa implements IDaoEmpresa {
             $consulta = $conexion->prepare('UPDATE ' . self::TABLA .' SET '.$query.
                 ' WHERE id = :id');
             $consulta->bindParam(':nombre', $this->Empresa->getNombre());
-            $consulta->bindParam(':precioActual', $this->Empresa->getPrecioActual());
-            $consulta->bindParam(':estado', $this->Empresa->getEstado());
-            $consulta->bindParam(':id', $this->Empresa->getId());
+             $consulta->bindParam(':rif', $this->Empresa->getRif());
+            $consulta->bindParam(':direccion', $this->Empresa->getDireccion());
+            $consulta->bindParam(':correo', $this->Empresa->getCorreo());
             $consulta->execute();
         }
         $conexion = null;
@@ -109,7 +109,7 @@ class DaoEmpresa implements IDaoEmpresa {
             $this->Empresa->setNombre($registro['nombre']);
             $this->Empresa->setRif($registro['rif']);
             $this->Empresa->setDireccion($registro['direccion']);
-            $this->Empresa->setCorre($registro['direccion']);
+            $this->Empresa->setCorreo($registro['correo']);
             $this->Empresa->setId($registro['id']);
 
         }else{

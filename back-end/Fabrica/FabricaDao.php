@@ -15,6 +15,7 @@ use Dao\DaoProducto;
 use Dao\DaoUsuario;
 require_once '..\Dao\DaoUsuario.php';
 require_once '..\Dao\DaoProducto.php';
+require_once '..\Dao\DaoEmpresa.php';
 
 class FabricaDao {
 
