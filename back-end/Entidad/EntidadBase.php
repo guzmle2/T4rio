@@ -2,14 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: DIAZ
- * Date: 07/06/2015
- * Time: 07:58 PM
+ * Date: 24/07/2015
+ * Time: 09:46 PM
  */
-
 
 class EntidadBase {
 
-     protected $id;
+    private $id;
+
+    function __construct()
+    {
+    }
 
     /**
      * @return mixed
@@ -26,5 +29,6 @@ class EntidadBase {
     {
         $this->id = $id;
     }
+
 
 }

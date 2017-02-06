@@ -2,17 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: DIAZ
- * Date: 07/06/2015
- * Time: 07:58 PM
+ * Date: 24/07/2015
+ * Time: 09:46 PM
  */
 
-namespace Entidad;
-
-include_once  'EntidadBase.php';
-use EntidadBase;
+include_once 'EntidadBase.php';
 
 
 class Usuario extends EntidadBase {
+
 
     private $nombre;
     private $apellido;
@@ -21,9 +19,8 @@ class Usuario extends EntidadBase {
     private $tipo;
     private $clave;
 
-    public function __construct()
+    function __construct()
     {
-
     }
 
     /**
@@ -122,6 +119,15 @@ class Usuario extends EntidadBase {
         $this->clave = $clave;
     }
 
-
+    function __toString()
+    {
+        return ('Usuario: '.$this->getId().', '.
+            $this->getNombre().', '.
+            $this->getApellido().', '.
+            $this->getCedula().', '.
+            $this->getCorreo().', '.
+            $this->getTipo().', '.
+            $this->getClave());
+    }
 
 }
